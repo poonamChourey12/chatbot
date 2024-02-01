@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="image/">
+    <title>Interactive Chatbot</title>
+   
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            block-size: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .chat-container {
+            max-inline-size: 400px;
+            inline-size: 100%;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .chat-log {
+            padding: 10px;
+            max-block-size: 300px;
+            overflow-y: auto;
+        }
+
+        input {
+            inline-size: 70%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin: 10px;
+        }
+
+        button {
+            inline-size: 28%;
+            padding: 8px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .user-message {
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            padding: 8px;
+            margin: 5px;
+            max-inline-size: 80%;
+            word-wrap: break-word;
+        }
+
+        .bot-message {
+            background-color: #4caf50;
+            color: #fff;
+            border-radius: 8px;
+            padding: 8px;
+            margin: 5px;
+            max-inline-size: 80%;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <nav>
+            <img src="image/download.jpeg" alt="chatbot">
+        </nav>
+        <div class="chat-log" id="chatLog"></div>
+        <input type="text" id="userInput" placeholder="Type a message...">
+        <button onclick="sendMessage()">Send</button>
+      
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const chatLog = document.getElementById('chatLog');
+            const userInput = document.getElementById('userInput');
+
+            const appendMessage = (message, sender) => {
+                const messageElement = document.createElement('div');
+                messageElement.className = sender + '-message';
+                messageElement.innerText = message;
+                chatLog.appendChild(messageElement);
+                chatLog.scrollTop = chatLog.scrollHeight; // Scroll to the bottom
+            };
+
+            const sendMessage = () => {
+                const userMessage = userInput.value;
+                if (userMessage.trim() === '') return;
+
+                appendMessage(`You: ${userMessage}`, 'user');
+
+                // Simulate a simple bot response (you can replace this with a more sophisticated logic)
+                const botResponse = getBotResponse(userMessage);
+                appendMessage(`Bot: ${botResponse}`, 'bot');
+
+                userInput.value = '';
+            };
+
+            const getBotResponse = (message) => {
+                if (message.toLowerCase().includes('hello')) {
+                    return 'Hello! How can I help you?';
+                } else if (message.toLowerCase().includes('bye')) {
+                    return 'Goodbye! Have a great day!';
+                } else {
+                    return "I'm sorry, I didn't understand that.";
+                }
+            };
+
+            window.sendMessage = sendMessage;
+        });
+    </script>
+</body>
+</html>
+
